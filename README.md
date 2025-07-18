@@ -23,13 +23,13 @@ Rilasciata da ICEP s.r.o. – 400 ore, accreditamento ISO/IEC 17024
 
 <img align="left" width="250" height="150" src="https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/Images/1.jpeg?raw=true"> 🔸 **[Gestore delle spese domestiche](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/tree/main/EPICODE_CS0225IT_PROJ/Proj1_VLAN)**
 
-Ho realizzato un’applicazione in Python per la gestione delle spese domestiche, con l’obiettivo di semplificare il monitoraggio quotidiano del bilancio familiare. L’app consente di registrare ogni spesa indicando data, descrizione e importo, salvando i dati in un file CSV. È possibile generare report mensili e visualizzare le 10 spese più elevate per identificare quelle più rilevanti. Grazie a un menu interattivo, l’utente può gestire le spese in modo semplice e immediato, favorendo una visione più consapevole dei flussi economici familiari.
+Ho sviluppato un’app in Python per gestire le spese domestiche, facilitando il monitoraggio del bilancio familiare. L’app registra spese con data, descrizione e importo, salvando i dati in CSV. Permette di generare report mensili e mostrare le 10 spese più alte, offrendo un menu interattivo per una gestione semplice e consapevole delle finanze familiari.
 
 ---
 
 <img align="left" width="250" height="150" src="https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/Images/2.jpeg?raw=true"> 🔸 **[Analisi dell'andamento degli indici azionari S&P 500 ed EURO STOXX](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/tree/main/EPICODE_CS0225IT_PROJ/Proj2_AnalisiPython)**
 
-Ho sviluppato un’analisi comparativa tra gli indici azionari S&P 500 e EURO STOXX 50, concentrandomi sugli ultimi 10 anni per individuare trend utili a supportare strategie d’investimento. L’analisi include il calcolo del rendimento percentuale su base mensile e annuale, lo studio del rendimento medio per giorno della settimana, e l’identificazione dei giorni con variazioni estreme per evidenziare i picchi di volatilità. Ho inoltre calcolato i volumi medi giornalieri di scambio per valutare l’interesse degli investitori. I dati utilizzati provengono da file CSV contenenti prezzi e volumi, elaborati in Python tramite operazioni di aggregazione e calcolo delle variazioni percentuali.
+Ho realizzato un’analisi comparativa tra gli indici S&P 500 e EURO STOXX 50 degli ultimi 10 anni per identificare trend utili a strategie d’investimento. L’analisi include rendimenti mensili e annuali, performance media per giorno della settimana, e individuazione di giorni a volatilità estrema. Ho anche calcolato i volumi medi di scambio per valutare l’interesse degli investitori, elaborando dati CSV con Python tramite aggregazioni e calcoli percentuali.
 
 ---
 
@@ -45,7 +45,7 @@ Ho creato una rubrica con MongoDB, importando e gestendo contatti con dati strut
 
 ---
 
-<img align="left" width="250" height="150" src="https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/Images/5.png?raw=true"> 🔸 **[Scraping delle titoli di una libreria online](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/tree/main/EPICODE_CS0225IT_PROJ/Proj5_Hydra_BlaxBox_SidesVancouver)**
+<img align="left" width="250" height="150" src="https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/Images/5.jpeg?raw=true"> 🔸 **[Scraping delle titoli di una libreria online](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/tree/main/EPICODE_CS0225IT_PROJ/Proj5_Hydra_BlaxBox_SidesVancouver)**
 
 Ho sviluppato uno script Python per estrarre titoli, valutazioni, prezzi e disponibilità dei libri dal sito https://books.toscrape.com. I dati raccolti sono stati organizzati in formato tabellare e salvati in CSV, garantendo robustezza tramite la gestione delle eccezioni. Il progetto supporta analisi di mercato competitive e ottimizzazione delle offerte di BookSmart Solutions.
 
@@ -76,7 +76,7 @@ Ho sviluppato una pipeline ETL su AWS per dati di criptovalute, configurando acc
 
 ---
 
-<img align="left" width="250" height="150" src="https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/Images/19.jpeg?raw=true">🔸 **[Gestione di un dataset di film mediante orchestrazione di una pipeline](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/tree/main/EPICODE_CS0225IT_PROJ/Proj9_PowerShell_Nmap_AnyRun_SQLi)**
+<img align="left" width="250" height="150" src="https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/Images/10.jpeg?raw=true">🔸 **[Gestione di un dataset di film mediante orchestrazione di una pipeline](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/tree/main/EPICODE_CS0225IT_PROJ/Proj9_PowerShell_Nmap_AnyRun_SQLi)**
 
 Ho realizzato una pipeline con Azure Data Factory per caricare un file CSV su Azure Blob Storage, eseguire la pulizia e rimappare le colonne in italiano. La pipeline mantiene solo le colonne ‘Film’, ‘Generi’ e ‘Valutazioni’, filtra i film con valutazioni superiori a 7 e assicura un trasferimento dati efficiente e parallelo, preservando i metadata per eventuali informazioni aggiuntive utili.
 
