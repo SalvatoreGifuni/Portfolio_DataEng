@@ -1,0 +1,4 @@
+ID_Ricovero,ID_Paziente,Data_Inizio,Data_Fine,Reparto,Motivo_Ricovero
+101,1,2024-01-10,2024-01-20,Cardiologia,Infarto miocardico
+102,2,2024-03-05,2024-03-12,Ortopedia,Frattura femore
+103,3,2024-05-01,2024-05-10,Neurologia,Emicrania cronica

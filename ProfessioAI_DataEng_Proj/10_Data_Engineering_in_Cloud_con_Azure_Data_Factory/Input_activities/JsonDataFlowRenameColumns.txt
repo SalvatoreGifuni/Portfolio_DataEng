@@ -1,0 +1,83 @@
+{
+    "name": "RenameColumns",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "MoviesDB_intermediate2",
+                        "type": "DatasetReference"
+                    },
+                    "name": "InputIntermediate"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "MoviedDB_outputfolder",
+                        "type": "DatasetReference"
+                    },
+                    "name": "OutputIntermediate",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "BlobStringa",
+                        "type": "LinkedServiceReference"
+                    }
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "CreateRowIndexColumn"
+                },
+                {
+                    "name": "DiscardRowIndexColumn"
+                },
+                {
+                    "name": "TranslateFirstRowToIta"
+                }
+            ],
+            "scriptLines": [
+                "parameters{",
+                "     par1 as string (\"Default1\"),",
+                "     par2 as string (\"Default2\"),",
+                "     par3 as string (\"Default3\")",
+                "}",
+                "source(output(",
+                "          {_col0_} as string,",
+                "          {_col1_} as string,",
+                "          {_col2_} as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false,",
+                "     partitionBy('hash', 1)) ~> InputIntermediate",
+                "InputIntermediate keyGenerate(output(RowIndex as long),",
+                "     startAt: 1L,",
+                "     stepValue: 1L,",
+                "     partitionBy('hash', 1)) ~> CreateRowIndexColumn",
+                "TranslateFirstRowToIta select(mapColumn(",
+                "          {_col0_},",
+                "          {_col1_},",
+                "          {_col2_}",
+                "     ),",
+                "     partitionBy('hash', 1),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> DiscardRowIndexColumn",
+                "CreateRowIndexColumn derive({_col0_} = iif(RowIndex==1, $par1, {_col0_}),",
+                "          {_col1_} = iif(RowIndex==1, $par2, {_col1_}),",
+                "          {_col2_} = iif(RowIndex==1, $par3, {_col2_})) ~> TranslateFirstRowToIta",
+                "DiscardRowIndexColumn sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     partitionFileNames:['MoviesDB_output.csv'],",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     mapColumn(",
+                "          {_col0_},",
+                "          {_col1_},",
+                "          {_col2_}",
+                "     ),",
+                "     partitionBy('hash', 1)) ~> OutputIntermediate"
+            ]
+        }
+    }
+}

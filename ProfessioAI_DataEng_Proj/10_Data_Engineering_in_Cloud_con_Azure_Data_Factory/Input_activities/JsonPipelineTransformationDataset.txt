@@ -1,0 +1,587 @@
+{
+    "name": "TransformationDataset",
+    "properties": {
+        "activities": [
+            {
+                "name": "OriginalFileMetaData",
+                "type": "GetMetadata",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataset": {
+                        "referenceName": "MoviesDB_origin",
+                        "type": "DatasetReference"
+                    },
+                    "fieldList": [
+                        "columnCount",
+                        "size",
+                        "lastModified",
+                        "itemName"
+                    ],
+                    "storeSettings": {
+                        "type": "AzureBlobStorageReadSettings",
+                        "recursive": true,
+                        "enablePartitionDiscovery": false
+                    },
+                    "formatSettings": {
+                        "type": "DelimitedTextReadSettings"
+                    }
+                }
+            },
+            {
+                "name": "FinalOutput_DatasetWithMetaData",
+                "type": "Copy",
+                "dependsOn": [
+                    {
+                        "activity": "OriginalFileMetaData",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "OtuputFileMetadata",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "GetCustomMetadata_OriginalFile",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "DelimitedTextSource",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageReadSettings",
+                            "recursive": true,
+                            "enablePartitionDiscovery": false
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextReadSettings"
+                        }
+                    },
+                    "sink": {
+                        "type": "DelimitedTextSink",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageWriteSettings",
+                            "metadata": [
+                                {
+                                    "name": "OriginalFileColumnNumber",
+                                    "value": {
+                                        "value": "@activity('OriginalFileMetaData').output.columnCount",
+                                        "type": "Expression"
+                                    }
+                                },
+                                {
+                                    "name": "OriginalFileSize",
+                                    "value": {
+                                        "value": "@activity('OriginalFileMetaData').output.size",
+                                        "type": "Expression"
+                                    }
+                                },
+                                {
+                                    "name": "OriginalFileLastModified",
+                                    "value": {
+                                        "value": "@activity('OriginalFileMetaData').output.lastModified",
+                                        "type": "Expression"
+                                    }
+                                },
+                                {
+                                    "name": "OriginalFileName",
+                                    "value": {
+                                        "value": "@activity('OriginalFileMetaData').output.itemName",
+                                        "type": "Expression"
+                                    }
+                                },
+                                {
+                                    "name": "OriginalFileCustomMetadata_Author",
+                                    "value": {
+                                        "value": "@activity('GetCustomMetadata_OriginalFile').output.ADFWebActivityResponseHeaders['x-ms-meta-Author']",
+                                        "type": "Expression"
+                                    }
+                                },
+                                {
+                                    "name": "OriginalFileCustomMetadata_Format",
+                                    "value": {
+                                        "value": "@activity('GetCustomMetadata_OriginalFile').output.ADFWebActivityResponseHeaders['x-ms-meta-Format']",
+                                        "type": "Expression"
+                                    }
+                                },
+                                {
+                                    "name": "OutputFileColumnNumber",
+                                    "value": {
+                                        "value": "@activity('OtuputFileMetadata').output.columnCount",
+                                        "type": "Expression"
+                                    }
+                                },
+                                {
+                                    "name": "OutputFileSize",
+                                    "value": {
+                                        "value": "@activity('OtuputFileMetadata').output.size",
+                                        "type": "Expression"
+                                    }
+                                },
+                                {
+                                    "name": "OutputFileLastModified",
+                                    "value": {
+                                        "value": "@activity('OtuputFileMetadata').output.lastModified",
+                                        "type": "Expression"
+                                    }
+                                }
+                            ]
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextWriteSettings",
+                            "quoteAllText": true,
+                            "fileExtension": ".csv"
+                        }
+                    },
+                    "enableStaging": false,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "MoviedDB_Final",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "MoviedDB_Final",
+                        "type": "DatasetReference"
+                    }
+                ]
+            },
+            {
+                "name": "SearchForColumnName",
+                "type": "Lookup",
+                "dependsOn": [
+                    {
+                        "activity": "DataWrangling",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "DelimitedTextSource",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageReadSettings",
+                            "recursive": true,
+                            "enablePartitionDiscovery": false
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextReadSettings"
+                        }
+                    },
+                    "dataset": {
+                        "referenceName": "MoviesDB_intermediate",
+                        "type": "DatasetReference"
+                    }
+                }
+            },
+            {
+                "name": "DataWrangling",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataflow": {
+                        "referenceName": "DataWrangling",
+                        "type": "DataFlowReference"
+                    },
+                    "compute": {
+                        "coreCount": 8,
+                        "computeType": "General"
+                    },
+                    "traceLevel": "Fine"
+                }
+            },
+            {
+                "name": "Web_Movies",
+                "type": "WebActivity",
+                "dependsOn": [
+                    {
+                        "activity": "SearchForColumnName",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "method": "POST",
+                    "headers": {
+                        "Ocp-Apim-Subscription-Key": "9HS5dJgGIAV6vN8rvZTVzV1TsEdphhQe3emYsoIqcY4YtjTYmP4pJQQJ99AJAC5RqLJXJ3w3AAAbACOG7sK4",
+                        "Ocp-Apim-Subscription-Region": "westeurope",
+                        "Content-Type": "application/json"
+                    },
+                    "url": "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=it",
+                    "body": [
+                        {
+                            "text": "@{activity('SearchForColumnName').output.firstRow.Prop_0}"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Var_Geners",
+                "type": "SetVariable",
+                "dependsOn": [
+                    {
+                        "activity": "Web_Geners",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": "Geners",
+                    "value": {
+                        "value": "@json(activity('Web_Geners').output.Response)[0].translations[0].text",
+                        "type": "Expression"
+                    }
+                }
+            },
+            {
+                "name": "Var_Rating",
+                "type": "SetVariable",
+                "dependsOn": [
+                    {
+                        "activity": "Web_Rating",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": "Rating",
+                    "value": {
+                        "value": "@json(activity('Web_Rating').output.Response)[0].translations[0].text",
+                        "type": "Expression"
+                    }
+                }
+            },
+            {
+                "name": "Web_Geners",
+                "type": "WebActivity",
+                "dependsOn": [
+                    {
+                        "activity": "SearchForColumnName",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "method": "POST",
+                    "headers": {
+                        "Ocp-Apim-Subscription-Key": "9HS5dJgGIAV6vN8rvZTVzV1TsEdphhQe3emYsoIqcY4YtjTYmP4pJQQJ99AJAC5RqLJXJ3w3AAAbACOG7sK4",
+                        "Ocp-Apim-Subscription-Region": "westeurope",
+                        "Content-Type": "application/json"
+                    },
+                    "url": "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=it",
+                    "body": [
+                        {
+                            "text": "@{activity('SearchForColumnName').output.firstRow.Prop_1}"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Web_Rating",
+                "type": "WebActivity",
+                "dependsOn": [
+                    {
+                        "activity": "SearchForColumnName",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "method": "POST",
+                    "headers": {
+                        "Ocp-Apim-Subscription-Key": "9HS5dJgGIAV6vN8rvZTVzV1TsEdphhQe3emYsoIqcY4YtjTYmP4pJQQJ99AJAC5RqLJXJ3w3AAAbACOG7sK4",
+                        "Ocp-Apim-Subscription-Region": "westeurope",
+                        "Content-Type": "application/json"
+                    },
+                    "url": "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=it",
+                    "body": [
+                        {
+                            "text": "@{activity('SearchForColumnName').output.firstRow.Prop_2}"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Var_Movies",
+                "type": "SetVariable",
+                "dependsOn": [
+                    {
+                        "activity": "Web_Movies",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": "Movies",
+                    "value": {
+                        "value": "@json(activity('Web_Movies').output.Response)[0].translations[0].text",
+                        "type": "Expression"
+                    }
+                }
+            },
+            {
+                "name": "CreateDummyColumns",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [
+                    {
+                        "activity": "Var_Movies",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "Var_Geners",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "Var_Rating",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataflow": {
+                        "referenceName": "CreateDummyColumns",
+                        "type": "DataFlowReference"
+                    },
+                    "compute": {
+                        "coreCount": 8,
+                        "computeType": "General"
+                    },
+                    "traceLevel": "Fine"
+                }
+            },
+            {
+                "name": "RenameColumns",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [
+                    {
+                        "activity": "CreateDummyColumns",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataflow": {
+                        "referenceName": "RenameColumns",
+                        "type": "DataFlowReference",
+                        "parameters": {
+                            "par1": {
+                                "value": "'@{variables('Movies')}'",
+                                "type": "Expression"
+                            },
+                            "par2": {
+                                "value": "'@{variables('Geners')}'",
+                                "type": "Expression"
+                            },
+                            "par3": {
+                                "value": "'@{variables('Rating')}'",
+                                "type": "Expression"
+                            }
+                        }
+                    },
+                    "compute": {
+                        "coreCount": 8,
+                        "computeType": "General"
+                    },
+                    "traceLevel": "Fine"
+                }
+            },
+            {
+                "name": "OtuputFileMetadata",
+                "type": "GetMetadata",
+                "dependsOn": [
+                    {
+                        "activity": "RenameColumns",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataset": {
+                        "referenceName": "MoviedDB_Final",
+                        "type": "DatasetReference"
+                    },
+                    "fieldList": [
+                        "columnCount",
+                        "size",
+                        "lastModified"
+                    ],
+                    "storeSettings": {
+                        "type": "AzureBlobStorageReadSettings",
+                        "recursive": true,
+                        "enablePartitionDiscovery": false
+                    },
+                    "formatSettings": {
+                        "type": "DelimitedTextReadSettings"
+                    }
+                }
+            },
+            {
+                "name": "GetCustomMetadata_OriginalFile",
+                "type": "WebActivity",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "method": "GET",
+                    "linkedServices": [
+                        {
+                            "referenceName": "BlobStringa",
+                            "type": "LinkedServiceReference"
+                        }
+                    ],
+                    "datasets": [
+                        {
+                            "referenceName": "MoviesDB_origin",
+                            "type": "DatasetReference"
+                        }
+                    ],
+                    "url": "https://sgaccarc.blob.core.windows.net/sginput/moviesDB.csv?sp=r&st=2024-11-07T12:01:18Z&se=2024-11-07T20:01:18Z&spr=https&sv=2022-11-02&sr=b&sig=g1s6KxWUaPpM8LvGae7RtkVHfalXn9Z4MERkZZdfwI4%3D"
+                }
+            }
+        ],
+        "variables": {
+            "Rating": {
+                "type": "String"
+            },
+            "Geners": {
+                "type": "String"
+            },
+            "Movies": {
+                "type": "String"
+            }
+        },
+        "annotations": [],
+        "lastPublishTime": "2024-11-06T14:42:54Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

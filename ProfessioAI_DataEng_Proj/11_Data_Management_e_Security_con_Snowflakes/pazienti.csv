@@ -1,0 +1,4 @@
+ID_Paziente,Nome,Cognome,Data_Nascita,Sesso,Codice_Fiscale,Indirizzo
+1,Mario,Rossi,1980-05-22,M,RSSMRA80E22H501U,"Via Roma 10, Milano"
+2,Laura,Bianchi,1975-11-05,F,BNCLRA75S45F205T,"Via Verdi 22, Torino"
+3,Giulia,Neri,1990-03-12,F,NRIGLU90C52D325V,"Via Dante 3, Bologna"

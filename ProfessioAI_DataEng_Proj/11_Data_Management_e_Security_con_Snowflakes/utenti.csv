@@ -1,0 +1,4 @@
+ID_Utente,Nome,Cognome,Email,Ruolo,Reparto
+1,Luca,Verdi,l.verdi@ospedale.it,Medico,Cardiologia
+2,Anna,Russo,a.russo@ospedale.it,Infermiera,Ortopedia
+3,Marco,Conti,m.conti@ospedale.it,Amministrativo,Amministrazione

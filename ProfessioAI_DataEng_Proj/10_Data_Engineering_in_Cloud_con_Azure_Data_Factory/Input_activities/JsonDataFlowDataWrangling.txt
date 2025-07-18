@@ -1,0 +1,83 @@
+{
+    "name": "DataWrangling",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "MoviesDB_origin",
+                        "type": "DatasetReference"
+                    },
+                    "name": "ImportOriginalDataset"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "MoviesDB_intermediatefolder",
+                        "type": "DatasetReference"
+                    },
+                    "name": "DataToCSVIntermediate",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "BlobStringa",
+                        "type": "LinkedServiceReference"
+                    }
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "SelectCorrectNameColumns"
+                },
+                {
+                    "name": "FilterValutation"
+                },
+                {
+                    "name": "ConvertIntoFloat"
+                },
+                {
+                    "name": "Descending"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          movies as string,",
+                "          Title as string,",
+                "          genresgenregenre as string,",
+                "          YEAR as string,",
+                "          Rating as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false,",
+                "     partitionBy('hash', 1)) ~> ImportOriginalDataset",
+                "ImportOriginalDataset select(mapColumn(",
+                "          Movies = movies,",
+                "          Genres = genresgenregenre,",
+                "          Rating",
+                "     ),",
+                "     partitionBy('hash', 1),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> SelectCorrectNameColumns",
+                "ConvertIntoFloat filter(Rating > 7,",
+                "     partitionBy('hash', 1)) ~> FilterValutation",
+                "SelectCorrectNameColumns derive(Rating = toFloat(Rating),",
+                "     partitionBy('hash', 1)) ~> ConvertIntoFloat",
+                "FilterValutation sort(desc(Rating, true),",
+                "     caseInsensitive: true,",
+                "     partitionBy('hash', 1)) ~> Descending",
+                "Descending sink(allowSchemaDrift: true,",
+                "     validateSchema: true,",
+                "     input(",
+                "          Title as string,",
+                "          Genres as string,",
+                "          Rating as string",
+                "     ),",
+                "     filePattern:'MoviesDB_modified.csv',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     partitionBy('hash', 1)) ~> DataToCSVIntermediate"
+            ]
+        }
+    }
+}

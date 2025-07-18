@@ -1,0 +1,4 @@
+ID_Visita,ID_Paziente,Data_Visita,Tipo_Visita,Medico,Note
+501,1,2024-03-15,Controllo,Dr. Bianchi,ECG normale
+502,2,2024-04-10,Visita di controllo post-ricovero,Dr. Verdi,Controllo RX
+503,3,2024-06-05,Neurologica,Dr. Neri,Prescrizione terapia preventiva

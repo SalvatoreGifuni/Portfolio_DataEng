@@ -1,0 +1,4 @@
+ID_Accesso,ID_Utente,ID_Paziente,Timestamp,Azione
+9001,1,1,2024-01-10 08:15:22,Visualizzazione
+9002,2,2,2024-03-06 10:00:00,Modifica cartella
+9003,3,3,2024-05-02 15:00:00,Accesso ai dati anagrafici

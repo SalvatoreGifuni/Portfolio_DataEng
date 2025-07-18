@@ -1,0 +1,51 @@
+{
+    "name": "CreateDummyColumns",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "MoviesDB_intermediate",
+                        "type": "DatasetReference"
+                    },
+                    "name": "ImportIntermediateDataset"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "MoviesDB_intermediate2",
+                        "type": "DatasetReference"
+                    },
+                    "name": "IntermediateOutput",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "BlobStringa",
+                        "type": "LinkedServiceReference"
+                    }
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "CreateDummyColumns",
+                    "description": "Creates an explicit mapping for each drifted column"
+                }
+            ],
+            "scriptLines": [
+                "source(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> ImportIntermediateDataset",
+                "ImportIntermediateDataset derive({_col0_} = toString(byName('_col0_')),",
+                "          {_col1_} = toString(byName('_col1_')),",
+                "          {_col2_} = toString(byName('_col2_')),",
+                "     partitionBy('hash', 1)) ~> CreateDummyColumns",
+                "CreateDummyColumns sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     partitionFileNames:['MoviesDB_modified2.csv'],",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     partitionBy('hash', 1)) ~> IntermediateOutput"
+            ]
+        }
+    }
+}

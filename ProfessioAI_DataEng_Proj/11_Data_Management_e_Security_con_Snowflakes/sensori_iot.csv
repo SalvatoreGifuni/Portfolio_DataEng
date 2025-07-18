@@ -1,0 +1,4 @@
+ID_Rilevazione,ID_Paziente,Timestamp,Tipo_Sensore,Valore,Unita_Misura
+1001,1,2024-01-10 08:10:00,Pressione,120/80,mmHg
+1002,2,2024-03-06 09:30:00,Battito,75,bpm
+1003,3,2024-05-02 14:45:00,Temperatura,36.8,°C
