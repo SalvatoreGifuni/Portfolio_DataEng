@@ -4,7 +4,7 @@ Questo portfolio raccoglie tutti i progetti che ho realizzato in ambito **Data E
 
 🎓 Certificazione in Data Engineering (EQF 5)  
 *Rilasciata da ICEP s.r.o. – 400 ore, accreditamento ISO/IEC 17024*  
-[Visualizza certificato finale (PDF)](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/blob/main/EPICODE_CS0225IT_CERT/Certificato_Finale/652696cd-f9c9-416d-a2b8-6ba49db3a51c.pdf)  
+[Visualizza certificato finale (PDF)](https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/MasterDataEngineering_ProfessioAI_Cert/MasterDataEngineering_ProfessioAI_Certification/Certificato_DataEng_SalvatoreGifuni.pdf)  
 
 📚 Certificati dei singoli moduli completati:  
 🔗 [Visualizza certificati moduli](https://github.com/SalvatoreGifuni/Portfolio_DataEng/tree/main/MasterDataEngineering_ProfessioAI_Cert/MasterDataEngineering_ProfessioAI_Cert_singlecourse)
