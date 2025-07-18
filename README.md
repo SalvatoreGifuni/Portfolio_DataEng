@@ -43,7 +43,11 @@ Ho realizzato un’analisi comparativa tra gli indici S&P 500 e EURO STOXX 50 de
 Ho creato una tabella unica contenente indicatori comportamentali dei clienti di una banca, combinando dati transazionali e informazioni sui conti. L’obiettivo è fornire una base solida per modelli di machine learning volti a prevedere il comportamento futuro dei clienti.
 
 
+
+
 ---
+
+
 
 
 <img align="left" width="250" height="150" src="https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/Images/4.jpeg?raw=true"> 🔸 **[Gestione di una rubrica di contatti con MongoDB](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/tree/main/EPICODE_CS0225IT_PROJ/Proj4_EmailPhishing)**
