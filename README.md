@@ -55,7 +55,6 @@ Ho sviluppato uno script Python per estrarre titoli, valutazioni, prezzi e dispo
 
 Ho sviluppato una pipeline di pre-processing automatizzata per un dataset di rilevazione del tumore al seno, utilizzando Scikit-learn. Il flusso gestisce pulizia dati, trasformazioni avanzate come simmetrizzazione, PCA e selezione delle feature, ottimizzando la qualità dei dati per migliorare le prestazioni dei modelli di machine learning.
 
-
 ---
 
 <img align="left" width="250" height="150" src="https://github.com/SalvatoreGifuni/Portfolio_DataEng/blob/main/Images/7.jpeg?raw=true">🔸 **[Previsione della progressione del diabete in pazienti a rischio](https://github.com/SalvatoreGifuni/Portfolio_CyberSecurity/tree/main/EPICODE_CS0225IT_PROJ/Proj7_wireshark)**
