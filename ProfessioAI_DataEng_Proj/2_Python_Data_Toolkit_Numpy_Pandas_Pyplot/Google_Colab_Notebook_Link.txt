@@ -1,0 +1,3 @@
+Google Colab link to the project for the course ‘Python Data Toolkit: Numpy, Pandas, Pyplot’:
+
+https://colab.research.google.com/drive/1bObe5UjBjFjq_4Lf7wJErYHu5AMgNijq#scrollTo=Xo60liCjFWJY
