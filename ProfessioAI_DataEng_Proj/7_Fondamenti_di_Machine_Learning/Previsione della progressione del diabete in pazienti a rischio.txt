@@ -1,0 +1,3 @@
+Google Colab link to the project for the course ‘Fundamentals of Machine Learning’:
+
+https://colab.research.google.com/drive/1IkrbY5tljC2S_ndM2vmkoMdq9ppptpKC#scrollTo=cQzbTdcrJ5JI
