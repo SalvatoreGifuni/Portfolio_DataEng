@@ -1,0 +1,11 @@
+CREATE TABLE public.my_btc (
+    data date ENCODE az64,
+    prezzo double precision ENCODE raw,
+    indice_google_trend integer ENCODE az64
+) DISTSTYLE AUTO;
+
+CREATE TABLE public.my_monero (
+    data date ENCODE az64,
+    prezzo double precision ENCODE raw,
+    indice_google_trend integer ENCODE az64
+) DISTSTYLE AUTO;

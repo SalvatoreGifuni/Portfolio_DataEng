@@ -1,0 +1,135 @@
+{
+  "Comment": "A description of my state machine",
+  "StartAt": "Parallel",
+  "States": {
+    "Parallel": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "T1_BTC",
+          "States": {
+            "T1_BTC": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::glue:startJobRun",
+              "Parameters": {
+                "JobName": "T1_BTC"
+              },
+              "Next": "T2_BTC",
+              "Catch": [
+                {
+                  "ErrorEquals": [
+                    "States.ALL"
+                  ],
+                  "Next": "FAIL_BTC"
+                }
+              ]
+            },
+            "T2_BTC": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::glue:startJobRun",
+              "Parameters": {
+                "JobName": "T2_BTC"
+              },
+              "Next": "L_BTC",
+              "Catch": [
+                {
+                  "ErrorEquals": [
+                    "States.ALL"
+                  ],
+                  "Next": "FAIL_BTC"
+                }
+              ]
+            },
+            "L_BTC": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::glue:startJobRun",
+              "Parameters": {
+                "JobName": "L_BTC"
+              },
+              "Catch": [
+                {
+                  "ErrorEquals": [
+                    "States.ALL"
+                  ],
+                  "Next": "FAIL_BTC"
+                }
+              ],
+              "End": true
+            },
+            "FAIL_BTC": {
+              "Type": "Fail"
+            }
+          }
+        },
+        {
+          "StartAt": "T1_MONERO",
+          "States": {
+            "T1_MONERO": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::glue:startJobRun",
+              "Parameters": {
+                "JobName": "T1_MONERO"
+              },
+              "Next": "T2_MONERO",
+              "Catch": [
+                {
+                  "ErrorEquals": [
+                    "States.ALL"
+                  ],
+                  "Next": "FAIL_MONERO"
+                }
+              ]
+            },
+            "T2_MONERO": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::glue:startJobRun",
+              "Parameters": {
+                "JobName": "T2_MONERO"
+              },
+              "Next": "L_MONERO",
+              "Catch": [
+                {
+                  "ErrorEquals": [
+                    "States.ALL"
+                  ],
+                  "Next": "FAIL_MONERO"
+                }
+              ]
+            },
+            "L_MONERO": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::glue:startJobRun",
+              "Parameters": {
+                "JobName": "L_MONERO"
+              },
+              "Catch": [
+                {
+                  "ErrorEquals": [
+                    "States.ALL"
+                  ],
+                  "Next": "FAIL_MONERO"
+                }
+              ],
+              "End": true
+            },
+            "FAIL_MONERO": {
+              "Type": "Fail"
+            }
+          }
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "Next": "Fail"
+        }
+      ],
+      "End": true
+    },
+    "Fail": {
+      "Type": "Fail"
+    }
+  }
+}

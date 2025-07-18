@@ -1,0 +1,8 @@
+select *
+from my_monero
+limit 10;
+
+
+select *
+from my_btc
+limit 10;
