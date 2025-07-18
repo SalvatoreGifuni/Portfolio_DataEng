@@ -1,0 +1,4 @@
+https://colab.research.google.com/drive/1VxdRaUYyRYAGnJVAqfkmRR0LSFlinoiH?usp=sharing
+
+Ho creato un modulo 'my_transformer.py' per contenere funzioni e classi custom. 
+Nel codice è possibile caricarlo, insieme al dataset grazie a 'files.upload()'
